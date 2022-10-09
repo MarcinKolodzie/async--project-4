@@ -3,8 +3,8 @@ class App {
     constructor() {
         this.container = null
 
-        this.users = []
-        this.isLoading = true
+        this.users = null
+        this.isLoading = false
         this.hasError = null
     }
 
@@ -21,12 +21,14 @@ class App {
     stopLoading() {
         console.log('stopLoading')
         this.isLoading = false
+        this.render()
     }
 
     startLoading() {
         console.log('startLoading')
         this.isLoading = true
         this.hasError = null
+        this.render()
     }
 
     setError(error) {
@@ -51,7 +53,27 @@ class App {
         const buttonElement = new Button('Load', () => this.loadUsers())
 
         this.container.appendChild(buttonElement.render())
+        
+        if(this.hasError){
+            const messageElement = new Message('Error ocured!')
+            this.container.appendChild(messageElement.render())
+            return this.container
 
+        }
+
+        if(!Array.isArray(this.users) || this.users.length === 0){
+            const messageElement = new Message('Nothing here!')
+            this.container.appendChild(messageElement.render())
+            return this.container
+
+        }
+
+        if(this.isLoading){
+            const messageElement = new Message('Loading...')
+            this.container.appendChild(messageElement.render())
+            return this.container
+
+        }
 
         this.users.forEach((user) => {
             const userElement = new User(user)
