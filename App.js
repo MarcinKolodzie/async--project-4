@@ -1,7 +1,9 @@
 class App {
 
     constructor() {
-        this.users = null
+        this.container = null
+
+        this.users = []
         this.isLoading = true
         this.hasError = null
     }
@@ -16,18 +18,18 @@ class App {
             .finally(() => this.stopLoading())
     }
 
-    stopLoading(){
+    stopLoading() {
         console.log('stopLoading')
         this.isLoading = false
     }
 
-    startLoading(){
+    startLoading() {
         console.log('startLoading')
         this.isLoading = true
         this.hasError = null
     }
 
-    setError(error){
+    setError(error) {
         console.log('setError')
         this.hasError = error
     }
@@ -35,6 +37,24 @@ class App {
     setUsers(users) {
         console.log('setUsers')
         this.users = users || []
+
+    }
+
+    render() {
+
+        if (!this.container) {
+            this.container = document.createElement('div')
+        }
+
+        this.container.innerHTML = ''
+
+        this.users.forEach((user) => {
+            const userElement = new User(user)
+
+            this.container.appendChild(userElement.render())
+        })
+
+        return this.container
 
     }
 

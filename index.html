@@ -16,11 +16,16 @@
 
 <body>
 
+    <div class="app-1"></div>
+
     <script src="./App.js"></script>
+    <script src="./Users.js"></script>
 
     <script>
 
         const app1 = new App()
+
+        document.querySelector('.app-1').appendChild(app1.render())
 
     </script>
 
